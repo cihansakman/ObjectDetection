@@ -17,12 +17,11 @@ function VideoCam() {
   //Import the actions which we need to use
   // Define our labelmap
   const labelMap = {
-    1: { name: "NiveaSoft", color: "red" },
-    2: { name: "Neutrogena", color: "yellow" },
-    3: { name: "CocaColaBox", color: "lime" },
-    4: { name: "CelenesSunCream", color: "blue" },
+    1: { id: "1", name: "NiveaSoft", color: "red" },
+    2: { id: "2", name: "Neutrogena", color: "yellow" },
+    3: { id: "3", name: "CocaColaBox", color: "lime" },
+    4: { id: "4", name: "CelenesSunCream", color: "blue" },
   };
-
   //We're using useSelector() hook to reach Redux store
   //detectedObjects is the name of the Reducer in the store
   const detectedObjectsArray = useSelector(
@@ -149,7 +148,6 @@ function VideoCam() {
       const classes = await obj[1].array();
       const scores = await obj[0].array();
 
-      // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
 
       // 5. TODO - Update drawing utility

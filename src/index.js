@@ -8,9 +8,9 @@ import { Provider } from "react-redux";
 import { store } from "./store/redux/store";
 import ProductPage from "./components/ProductsPage";
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <React.StrictMode>
+  <BrowserRouter>
+    <React.StrictMode>
+      <Provider store={store}>
         <Routes>
           <Route exact path="/" element={<HomePage />} />
 
@@ -18,9 +18,8 @@ ReactDOM.render(
 
           <Route exact path="/product" element={<ProductPage />} />
         </Routes>
-      </React.StrictMode>
-    </BrowserRouter>
-  </Provider>,
-
+      </Provider>
+    </React.StrictMode>
+  </BrowserRouter>,
   document.getElementById("root")
 );
