@@ -89,7 +89,7 @@ function VideoCam() {
   // }
 
   function redirectPage(array) {
-    if (array.length > 5) {
+    if (array.length > 9) {
       return navigate("/product/");
     }
     console.log("Length of array:", array.length);

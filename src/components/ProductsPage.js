@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { db } from "../firebaseConfig";
-import { collection, getDocs } from "firebase/firestore/lite";
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore/lite";
 import { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,9 +16,12 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
 
 function MyVerticallyCenteredModal(props) {
   const { product } = props;
+
+  const [isSaveClicked, setIsSaveClicked] = useState(false);
 
   const [value, setValue] = useState({
     price: product.price,
@@ -34,16 +37,27 @@ function MyVerticallyCenteredModal(props) {
 
   const handleChange = (name) => (e) => {
     e.preventDefault();
+    console.log("Onchange");
     setValue({ ...value, [name]: e.target.value });
+    console.log(e.target.value);
   };
 
-  console.log("Inside the modal, Value:", value);
-  console.log("Product", product);
+  //console.log("Inside the modal, Value:", value);
+  //console.log("Product", product);
 
   const { price, quantity } = value;
 
   //Function for updating the docs
-  const updateDoc = () => {};
+  const updateDoccument = async () => {
+    // e.preventDefault();
+    toast.success("Updated Successfully....");
+    const ref = doc(db, "products", props.product.id);
+    await updateDoc(ref, {
+      price: price,
+      quantity: quantity,
+    });
+    setIsSaveClicked(true);
+  };
 
   return (
     <Modal
@@ -68,8 +82,10 @@ function MyVerticallyCenteredModal(props) {
                 type="text"
                 placeholder="Price"
                 value={price}
-                onChange={() => {
-                  handleChange("price");
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setValue({ ...value, ["price"]: e.target.value });
+                  //handleChange("price");
                 }}
               />
             </Col>
@@ -88,8 +104,10 @@ function MyVerticallyCenteredModal(props) {
                 type="text"
                 placeholder="Quantity"
                 value={quantity}
-                onChange={() => {
-                  handleChange("quantity");
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setValue({ ...value, ["quantity"]: e.target.value });
+                  //handleChange("price");
                 }}
               />
             </Col>
@@ -97,7 +115,9 @@ function MyVerticallyCenteredModal(props) {
 
           <Form.Group as={Row} className="mb-3">
             <Col sm={{ span: 10, offset: 2 }}>
-              <Button type="submit">Save</Button>
+              <Button type="submit" onClick={updateDoccument}>
+                Save
+              </Button>
             </Col>
           </Form.Group>
         </Form>
@@ -138,7 +158,6 @@ function ProductPage() {
     return self.indexOf(value) === index;
   }
   console.log("updata,", updata);
-
   // usage example:
   const unique = detectedObjectsArray.filter(onlyUnique);
 
@@ -150,55 +169,62 @@ function ProductPage() {
       style={{
         display: "flex",
         flexDirection: "row",
-        height: "100vh",
+        height: "320vh",
         justifyContent: "center",
-        alignItems: "center",
+        //alignItems: "center",
       }}
     >
-      <div>
+      <div
+        style={{
+          marginTop: 30,
+          //alignItems: "center",
+        }}
+      >
+        <ToastContainer />
         {products.map((product) => {
-          //if (unique.indexOf(product.name) >= 0) {
-          return (
-            <div>
-              <Card style={{ width: "18rem" }}>
-                <Card.Img variant="top" src={product.imageURL} />
-                <Card.Body>
-                  <Card.Title>{product.name}</Card.Title>
-                </Card.Body>
-                <ListGroup className="list-group-flush">
-                  <ListGroupItem>
-                    <span style={{ fontWeight: "bold" }}>Price:</span>{" "}
-                    {product.price}€
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <span style={{ fontWeight: "bold" }}>Quantity:</span>{" "}
-                    {product.quantity}
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <span style={{ fontWeight: "bold" }}>DOC ID:</span>{" "}
-                    {product.id}
-                  </ListGroupItem>
-                </ListGroup>
-                <Card.Body>
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      setUpdata(product);
-                      setModalShow(true);
-                    }}
-                  >
-                    Update
-                  </Button>
-                </Card.Body>
-              </Card>
-              <MyVerticallyCenteredModal
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-                product={updata}
-              />
-            </div>
-          );
-          //}
+          if (unique.indexOf(product.name) >= 0) {
+            return (
+              <div
+                style={{
+                  marginTop: 20,
+                  //alignItems: "center",
+                }}
+              >
+                <Card style={{ width: "18rem" }}>
+                  <Card.Img variant="top" src={product.imageURL} />
+                  <Card.Body>
+                    <Card.Title>{product.name}</Card.Title>
+                  </Card.Body>
+                  <ListGroup className="list-group-flush">
+                    <ListGroupItem key={product.id + product.price}>
+                      <span style={{ fontWeight: "bold" }}>Price:</span>{" "}
+                      {product.price}€
+                    </ListGroupItem>
+                    <ListGroupItem key={product.id + product.quantity}>
+                      <span style={{ fontWeight: "bold" }}>Quantity:</span>{" "}
+                      {product.quantity}
+                    </ListGroupItem>
+                  </ListGroup>
+                  <Card.Body>
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        setUpdata(product);
+                        setModalShow(true);
+                      }}
+                    >
+                      Update
+                    </Button>
+                  </Card.Body>
+                </Card>
+                <MyVerticallyCenteredModal
+                  show={modalShow}
+                  onHide={() => setModalShow(false)}
+                  product={updata}
+                />
+              </div>
+            );
+          }
         })}
       </div>
     </div>
