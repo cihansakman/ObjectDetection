@@ -105,8 +105,11 @@ function VideoCam() {
   const runCoco = async () => {
     // 3. TODO - Load network
     //const net = await tf.loadGraphModel('https://livelong.s3.au-syd.cloud-object-storage.appdomain.cloud/model.json')
-    const net = await tf.loadGraphModel(
+    /*const net = await tf.loadGraphModel(
       "https://myobjectdetectionbucket.s3.eu-de.cloud-object-storage.appdomain.cloud/model.json"
+    );*/
+    const net = await tf.loadGraphModel(
+      "https://tuned-object-detection.s3.eu-de.cloud-object-storage.appdomain.cloud/model.json"
     );
 
     // Loop and detect products
@@ -142,11 +145,15 @@ function VideoCam() {
       const expanded = casted.expandDims(0);
       const obj = await net.executeAsync(expanded);
 
-      //console.log(await obj[0].array());
+      //console.log(img);
+      //console.log(await obj[7].array());
 
-      const boxes = await obj[4].array();
-      const classes = await obj[1].array();
-      const scores = await obj[0].array();
+      //const boxes = await obj[4].array();
+      const boxes = await obj[2].array();
+      //const classes = await obj[1].array();
+      const classes = await obj[7].array();
+      //const scores = await obj[0].array();
+      const scores = await obj[6].array();
 
       const ctx = canvasRef.current.getContext("2d");
 
