@@ -1,0 +1,26 @@
+<annotation>
+	<folder>cocaColaBox</folder>
+	<filename>cocaColaBox.56c8585e-d82a-11ec-8276-c809a833e22f.jpg</filename>
+	<path>C:\Users\sakma\Desktop\TensorFlow Object Detection\TFODCourse\Tensorflow\workspace\images\collectedimages\cocaColaBox\cocaColaBox.56c8585e-d82a-11ec-8276-c809a833e22f.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>CocaColaBox</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>104</xmin>
+			<ymin>97</ymin>
+			<xmax>329</xmax>
+			<ymax>333</ymax>
+		</bndbox>
+	</object>
+</annotation>

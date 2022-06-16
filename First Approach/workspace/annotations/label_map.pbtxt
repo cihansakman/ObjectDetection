@@ -1,0 +1,16 @@
+item { 
+	name:'NiveaSoft'
+	id:1
+}
+item { 
+	name:'Neutrogena'
+	id:2
+}
+item { 
+	name:'CocaColaBox'
+	id:3
+}
+item { 
+	name:'CelenesSunCream'
+	id:4
+}

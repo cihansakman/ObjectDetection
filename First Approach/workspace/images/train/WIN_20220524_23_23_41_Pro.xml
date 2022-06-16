@@ -1,0 +1,26 @@
+<annotation>
+	<folder>niveaSoft</folder>
+	<filename>WIN_20220524_23_23_41_Pro.jpg</filename>
+	<path>C:\Users\sakma\Desktop\TensorFlow Object Detection\TFODCourse\Tensorflow\workspace\images\collectedimages\niveaSoft\WIN_20220524_23_23_41_Pro.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>NiveaSoft</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>354</xmin>
+			<ymin>84</ymin>
+			<xmax>468</xmax>
+			<ymax>363</ymax>
+		</bndbox>
+	</object>
+</annotation>
